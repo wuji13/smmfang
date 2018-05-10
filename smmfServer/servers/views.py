@@ -63,16 +63,11 @@ def Write(request):
             _id_wx = request.POST.get('wxid')
             _grade = request.POST.get('grade')
             _user = User.objects.get(id_wx = _id_wx)
-            print(_grade)
             u = Ranking.objects.all().order_by('grade')
-            print(u)
-
-            print(u.last().grade)
             if u.__len__()>=100:
                 if int(u.last().grade)>int(_grade):
                     myself = Ranking.objects.get(user=_user)
                     if myself:
-                        print('myself')
                         myself.delete()
                     rank = Ranking(user = _user,name =_user.name,grade =_grade,photourl=_user.photourl)
                     rank.save()
@@ -101,7 +96,7 @@ def Rank():
     print("Rank")
     n=0
     rank = Ranking.objects.all().order_by('grade')
-    print(rank)
+ 
     for i in rank:
         i.rangking = n+1
         i.save()
